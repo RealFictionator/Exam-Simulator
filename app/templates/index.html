@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipcard Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .card {
+            width: 560px;
+            height: 100%;
+            perspective: 1000px;
+            margin: auto;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            
+        }
+        .card-inner div img {
+            width: 100%;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .card-front {
+            padding: 2px;
+            background-color: white;
+        }
+        .card-back {
+            background-color: #2980b9;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        button {
+            font-size: larger;
+            font-weight: 700;
+            outline: none;
+            border: none;
+            background-color: white;
+            padding: 16px 20px;
+            margin: 20px 0;
+            float: right;
+            box-shadow: 1px 1px 2px 1px #2980b9;
+            cursor: pointer;
+            transition: all 1s ease-in-out;
+            color: #2980b9;
+
+        }
+        button:hover {
+            background-color: #2980b9;
+            color: white;
+            box-shadow: inset 1px 1px 2px 1px black;
+        }
+        .space-between {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <div class="card-inner">
+        <div class="card-front">
+            <img src="{{ question_image }}" alt="Question">
+            <div class="space-between">
+                <button onclick="prevQuestion()">Previous Question</button>
+                <button onclick="flipCard()">Flip</button>
+            </div>
+        </div>
+        <div class="card-back">
+            <img src="{{ answer_image }}" alt="Answer">
+            <div class="space-between">
+                <button onclick="deleteQuestion()">Delete Question</button>
+                <button onclick="nextQuestion()">Next Question</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function flipCard() {
+        document.getElementById('card').classList.toggle('flipped');
+    }
+
+    function nextQuestion() {
+        var currentUrl = window.location.href;
+        var currentIdx = parseInt(currentUrl.split('/question/')[1]);
+        if (isNaN(currentIdx)) {
+            currentIdx = 0; // Default to index 0 if the URL is not in the expected format
+        }
+        var nextIdx = currentIdx + 1;
+        window.location.href = '/question/' + nextIdx;
+    }
+
+    function prevQuestion() {
+        var currentUrl = window.location.href;
+        var currentIdx = parseInt(currentUrl.split('/question/')[1]);
+        if (isNaN(currentIdx)) {
+            currentIdx = 0; // Default to index 0 if the URL is not in the expected format
+        }
+        var prevIdx = currentIdx - 1;
+        if (prevIdx < 0) {
+            prevIdx = 0; // Prevent going to a non-existent question index
+        }
+        window.location.href = '/question/' + prevIdx;
+    }
+
+    function deleteQuestion() {
+        var currentUrl = window.location.href;
+        var currentIdx = parseInt(currentUrl.split('/question/')[1]);
+        if (isNaN(currentIdx)) {
+            currentIdx = 0; // Default to index 0 if the URL is not in the expected format
+        }
+        window.location.href = '/delete_question/' + currentIdx;
+    }
+
+</script>
+
+</body>
+</html>
