@@ -8,8 +8,8 @@ Gives you screenshoted questions and answers as flipcards to learn
 
 ## Download this directory to desktop
 1. Move your questions and answers to following folders:
-    1. Questions: Exam-Simulator\app\static\Exam-Topics\questions\question_139.png
-    2. Answers: Exam-Simulator\app\static\Exam-Topics\answers\answer_139.png
+    - Questions: Exam-Simulator\app\static\Exam-Topics\questions\question_139.png
+    - Answers: Exam-Simulator\app\static\Exam-Topics\answers\answer_139.png
 2. Open the Exam-Simulator in VS Code
 
 ## Install docker desktop
